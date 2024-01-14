@@ -2,7 +2,10 @@ import soceketIOClient from "socket.io-client";
 import { Socket } from "socket.io-client";
 import React, { useState } from "react";
 import { useRef, useEffect } from "react";
-const socket = soceketIOClient.connect("http://localhost:3001");
+// const socket = soceketIOClient.connect("http://localhost:3001");
+const socket = soceketIOClient.connect(
+  "https://chat-backend-rkyg.onrender.com/"
+);
 
 function App() {
   const nameRef = useRef();
