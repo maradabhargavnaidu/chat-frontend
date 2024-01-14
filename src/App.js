@@ -12,20 +12,21 @@ function App() {
   const nameRef = useRef();
   const roomRef = useRef();
   const messageRef = useRef();
-  const [recdata, setRecdata] = useState([]);
-  const [sendata, setSendata] = useState([]);
+  // const [recdata, setRecdata] = useState([]);
+  // const [sendata, setSendata] = useState([]);
+  const [totdata, setTotdata] = useState([]);
 
   function join() {
     socket.emit("join_room", roomRef.current.value);
   }
   const sendmessage = () => {
-    // setSendata((sendata) => [
-    //   ...sendata,
-    //   {
-    //     username: nameRef.current.value,
-    //     message: messageRef.current.value,
-    //   },
-    // ]);
+    setTotdata((sendata) => [
+      ...sendata,
+      {
+        username: nameRef.current.value,
+        message: messageRef.current.value,
+      },
+    ]);
     socket.emit("send_message", {
       roomid: roomRef.current.value,
       username: nameRef.current.value,
@@ -34,7 +35,7 @@ function App() {
   };
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      setRecdata((recdata) => [...recdata, data]);
+      setTotdata((recdata) => [...recdata, data]);
     });
   }, []);
   return (
@@ -67,7 +68,7 @@ function App() {
           send
         </button>
         <h1 className="text-white text-5xl font-bold text-center">Messages</h1>
-        {recdata.map((data, index) => {
+        {totdata.map((data, index) => {
           return (
             <div>
               <p className="text-red-400 font-bold text-2xl">
